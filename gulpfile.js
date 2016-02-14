@@ -2,14 +2,18 @@ const gulp = require('gulp');
 const webpack = require('gulp-webpack');
 
 const webpackConfig = {
+    output: {
+        filename: 'build.js'
+    },
     watch: true,
     module: {
         loaders: [
             {
                 text: /\.js$/,
                 loader: 'babel',
-                presets: {
-                    query: ['es2015', 'stage-0']
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015', 'stage-0']
                 }
             }
         ]
@@ -21,3 +25,5 @@ gulp.task('es6to5', () => {
         .pipe(webpack(webpackConfig))
         .pipe(gulp.dest('./build'))
 });
+
+gulp.task('default', ['es6to5']);
